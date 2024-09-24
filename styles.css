@@ -78,3 +78,77 @@ form .form-group select {
         margin-left: 0;
     }
 }
+/* Employee Management Form Styles */
+.employee-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+/* Add Employee Button */
+.add-employee-btn {
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+    .add-employee-btn:hover {
+        background-color: #45a049; /* Darker green on hover */
+    }
+
+/* Employee Table Styles */
+#employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+    #employee-table th, #employee-table td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    #employee-table th {
+        background-color: #89cff0; /* Match sidebar color */
+        color: white;
+    }
+
+    #employee-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+/* Permissions Dropdown Styling */
+#permissions {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+}
