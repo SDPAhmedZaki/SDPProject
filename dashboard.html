@@ -15,12 +15,12 @@
     <!-- Sidebar Menu -->
     <div class="sidebar">
         <h2>Menu</h2>
-        <a href="#" onclick="showSection('overview')"><img src="icons/dashboard.png" alt="Dashboard Icon" /> Dashboard Overview</a>
-        <a href="#" onclick="showSection('vehicle-tracking')"><img src="icons/tracking.png" alt="Tracking Icon" /> Vehicle Tracking</a>
-        <a href="#" onclick="showSection('employee-management')"><img src="icons/employees.png" alt="Employee Icon" /> Employee Management</a>
-        <a href="#" onclick="showSection('vehicle-management')"><img src="icons/vehicles.png" alt="Vehicle Icon" /> Vehicle Management</a>
-        <a href="#" onclick="showSection('notifications')"><img src="icons/alerts.png" alt="Alerts Icon" /> Notifications & Alerts</a>
-        <a href="#" onclick="showSection('settings')"><img src="icons/settings.png" alt="Settings Icon" /> Settings</a>
+        <a href="#" onclick="showSection('overview')"><img src="dashboard.png" alt="Dashboard Icon" /> Dashboard Overview</a>
+        <a href="#" onclick="showSection('vehicle-tracking')"><img src="tracking.png" alt="Tracking Icon" /> Vehicle Tracking</a>
+        <a href="#" onclick="showSection('employee-management')"><img src="employees.png" alt="Employee Icon" /> Employee Management</a>
+        <a href="#" onclick="showSection('vehicle-management')"><img src="vehicles.png" alt="Vehicle Icon" /> Vehicle Management</a>
+        <a href="#" onclick="showSection('notifications')"><img src="alerts.png" alt="Alerts Icon" /> Notifications & Alerts</a>
+        <a href="#" onclick="showSection('settings')"><img src="settings.png" alt="Settings Icon" /> Settings</a>
         <a href="#" onclick="logout()">Log out</a>
     </div>
 
@@ -53,19 +53,58 @@
             <p>Vehicle tracking data will go here.</p>
         </div>
 
-        <!-- Employee Management Section -->
-        <div id="employee-management" class="content-section" style="display: none;">
-            <h2>Employee Management</h2>
-            <form id="employee-form" class="employee-form" onsubmit="addEmployee(event)">
-                <!-- Form Inputs -->
-                <button type="submit" class="add-employee-btn">+ Add Employee</button>
-            </form>
-            <table id="employee-table">
-                <thead> ... </thead>
-                <tbody> ... </tbody>
-            </table>
-        </div>
+         <!-- Employee Management Section -->
+ <div id="employee-management" class="content-section" style="display: none;">
+     <h2>Employee Management</h2>
 
+     <!-- Employee Input Form -->
+     <form id="employee-form" class="employee-form" onsubmit="addEmployee(event)">
+         <div class="form-group">
+             <label for="name">Name:</label>
+             <input type="text" id="name" required>
+         </div>
+         <div class="form-group">
+             <label for="start-date">Start Date:</label>
+             <input type="date" id="start-date" required>
+         </div>
+         <div class="form-group">
+             <label for="dob">Date of Birth:</label>
+             <input type="date" id="dob" required>
+         </div>
+         <div class="form-group">
+             <label for="position">Position:</label>
+             <input type="text" id="position" required>
+         </div>
+         <div class="form-group">
+             <label for="permissions">Permissions:</label>
+             <select id="permissions" required>
+                 <option value="Basic">Basic</option>
+                 <option value="Manager">Manager</option>
+                 <option value="Admin">Admin</option>
+             </select>
+         </div>
+
+         <!-- Add Employee Button -->
+         <button type="submit" class="add-employee-btn">+ Add Employee</button>
+     </form>
+
+     <!-- Employee Table -->
+     <h3>Employee List</h3>
+     <table id="employee-table">
+         <thead>
+             <tr>
+                 <th>Name</th>
+                 <th>Start Date</th>
+                 <th>Date of Birth</th>
+                 <th>Position</th>
+                 <th>Permissions</th>
+             </tr>
+         </thead>
+         <tbody>
+             <!-- New employees will be added here -->
+         </tbody>
+     </table>
+ </div>
         <!-- Settings Section -->
         <div id="settings" class="content-section" style="display: none;">
             <h2>Settings</h2>
