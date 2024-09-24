@@ -7,18 +7,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body onload="checkLogin(); showSection('overview')">
-    <!-- Show 'Dashboard Overview' on load -->
-    <div id="welcome-msg"></div>
+    <!-- Welcome Message -->
+    <header>
+        <div id="welcome-msg"></div>
+    </header>
 
     <!-- Sidebar Menu -->
     <div class="sidebar">
         <h2>Menu</h2>
-        <a href="#" onclick="showSection('overview')">Dashboard Overview</a>
-        <a href="#" onclick="showSection('vehicle-tracking')">Vehicle Tracking</a>
-        <a href="#" onclick="showSection('employee-management')">Employee Management</a>
-        <a href="#" onclick="showSection('vehicle-management')">Vehicle Management</a>
-        <a href="#" onclick="showSection('notifications')">Notifications & Alerts</a>
-        <a href="#" onclick="showSection('settings')">Settings</a>
+        <a href="#" onclick="showSection('overview')"><img src="icons/dashboard.png" alt="Dashboard Icon" /> Dashboard Overview</a>
+        <a href="#" onclick="showSection('vehicle-tracking')"><img src="icons/tracking.png" alt="Tracking Icon" /> Vehicle Tracking</a>
+        <a href="#" onclick="showSection('employee-management')"><img src="icons/employees.png" alt="Employee Icon" /> Employee Management</a>
+        <a href="#" onclick="showSection('vehicle-management')"><img src="icons/vehicles.png" alt="Vehicle Icon" /> Vehicle Management</a>
+        <a href="#" onclick="showSection('notifications')"><img src="icons/alerts.png" alt="Alerts Icon" /> Notifications & Alerts</a>
+        <a href="#" onclick="showSection('settings')"><img src="icons/settings.png" alt="Settings Icon" /> Settings</a>
         <a href="#" onclick="logout()">Log out</a>
     </div>
 
@@ -28,15 +30,12 @@
         <!-- Dashboard Overview -->
         <div id="overview" class="content-section">
             <h2>Dashboard Overview</h2>
-
             <div class="map">
                 <h2>Tracking (Google Map)</h2>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509201!2d144.95592831550468!3d-37.8172097420149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf5777d1723444b0!2sVictoria%20State%20Library%2C%20Melbourne%20VIC%203001!5e0!3m2!1sen!2sau!4v1645697465678!5m2!1sen!2sau"></iframe>
+                <iframe src="https://www.google.com/maps/embed" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
-
             <div class="reports">
                 <h2>Employee Reports</h2>
-
                 <div class="employee-card">
                     <img src="employee2.jpg" alt="Employee 1" class="employee-img">
                     <div class="employee-details">
@@ -45,8 +44,6 @@
                         <p class="employee-position">Position </p>
                     </div>
                 </div>
-
-                <!-- Repeat employee cards for other employees -->
             </div>
         </div>
 
@@ -59,125 +56,78 @@
         <!-- Employee Management Section -->
         <div id="employee-management" class="content-section" style="display: none;">
             <h2>Employee Management</h2>
-
-            <!-- Employee Input Form -->
             <form id="employee-form" class="employee-form" onsubmit="addEmployee(event)">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="start-date">Start Date:</label>
-                    <input type="date" id="start-date" required>
-                </div>
-                <div class="form-group">
-                    <label for="dob">Date of Birth:</label>
-                    <input type="date" id="dob" required>
-                </div>
-                <div class="form-group">
-                    <label for="position">Position:</label>
-                    <input type="text" id="position" required>
-                </div>
-                <div class="form-group">
-                    <label for="permissions">Permissions:</label>
-                    <select id="permissions" required>
-                        <option value="Basic">Basic</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Admin">Admin</option>
-                    </select>
-                </div>
-
-                <!-- Add Employee Button -->
+                <!-- Form Inputs -->
                 <button type="submit" class="add-employee-btn">+ Add Employee</button>
             </form>
-
-            <!-- Employee Table -->
-            <h3>Employee List</h3>
             <table id="employee-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Start Date</th>
-                        <th>Date of Birth</th>
-                        <th>Position</th>
-                        <th>Permissions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- New employees will be added here -->
-                </tbody>
+                <thead> ... </thead>
+                <tbody> ... </tbody>
             </table>
-        </div>
-
-
-
-        <!-- Vehicle Management Section -->
-        <div id="vehicle-management" class="content-section" style="display: none;">
-            <h2>Vehicle Management</h2>
-            <div class="vehicle-card-grid">
-                <div class="vehicle-card">
-                    <h3>Vehicle 1</h3>
-                    <p>Status: Active</p>
-                </div>
-                <div class="vehicle-card">
-                    <h3>Vehicle 2</h3>
-                    <p>Status: Inactive</p>
-                </div>
-                <!-- Add more vehicles here -->
-            </div>
-        </div>
-
-        <!-- Notifications & Alerts Section -->
-        <div id="notifications" class="content-section" style="display: none;">
-            <h2>Notifications & Alerts</h2>
-            <div class="alert-list">
-                <div class="alert-item">
-                    <p>Alert 1: Vehicle 3 needs maintenance.</p>
-                </div>
-                <div class="alert-item">
-                    <p>Alert 2: Employee 2 is overdue for a review.</p>
-                </div>
-            </div>
         </div>
 
         <!-- Settings Section -->
         <div id="settings" class="content-section" style="display: none;">
             <h2>Settings</h2>
-            <p>Manage your account, system settings, etc.</p>
+            
+            <!-- Profile Settings -->
+            <h3>Profile Information</h3>
+            <div class="form-group">
+                <label for="profile-name">Name:</label>
+                <input type="text" id="profile-name" value="John Doe" required>
+            </div>
+            <div class="form-group">
+                <label for="profile-email">Email:</label>
+                <input type="email" id="profile-email" value="johndoe@example.com" required>
+            </div>
+            <button onclick="saveProfile()">Save Profile</button>
+            
+            <!-- Change Password -->
+            <h3>Change Password</h3>
+            <div class="form-group">
+                <label for="current-password">Current Password:</label>
+                <input type="password" id="current-password" required>
+            </div>
+            <div class="form-group">
+                <label for="new-password">New Password:</label>
+                <input type="password" id="new-password" required>
+            </div>
+            <button onclick="changePassword()">Change Password</button>
+
+            <!-- Notification Preferences -->
+            <h3>Notification Preferences</h3>
+            <div class="form-group">
+                <label for="email-notifications">Email Notifications:</label>
+                <input type="checkbox" id="email-notifications" checked>
+            </div>
+            <div class="form-group">
+                <label for="sms-notifications">SMS Notifications:</label>
+                <input type="checkbox" id="sms-notifications">
+            </div>
+
+            <!-- Theme/Appearance -->
+            <h3>Theme Settings</h3>
+            <div class="form-group">
+                <label for="theme">Select Theme:</label>
+                <select id="theme" onchange="changeTheme()">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+
+            <!-- Language Settings -->
+            <h3>Language Settings</h3>
+            <div class="form-group">
+                <label for="language">Select Language:</label>
+                <select id="language">
+                    <option value="en">English</option>
+                    <option value="fr">French</option>
+                    <option value="es">Spanish</option>
+                </select>
+            </div>
         </div>
     </div>
 
-    <script>
-        // Function to show the selected section and hide others
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.getElementsByClassName('content-section');
-            for (let i = 0; i < sections.length; i++) {
-                sections[i].style.display = 'none';
-            }
-
-            // Show the selected section
-            document.getElementById(sectionId).style.display = 'block';
-        }
-
-        // Check login status
-        function checkLogin() {
-            const username = sessionStorage.getItem('username');
-            if (!username) {
-                window.location.href = 'index.html'; // Redirect to login if not logged in
-            } else {
-                document.getElementById('welcome-msg').textContent = `Welcome, ${username}!`;
-            }
-        }
-
-        // Logout function
-        function logout() {
-            sessionStorage.removeItem('username');
-            window.location.href = 'index.html'; // Redirect to login page
-        }
-    </script>
-
     <script src="scripts.js"></script>
-
 </body>
 </html>
