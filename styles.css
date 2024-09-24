@@ -1,242 +1,80 @@
-/* General Styles */
+/* General Layout */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h2 {
-    margin-bottom: 20px;
+body.light {
+    background-color: #fff;
+    color: #000;
 }
 
-/* Login Page Styles */
-.login-box {
-    width: 300px;
-    margin: 100px auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    border-radius: 10px;
+body.dark {
+    background-color: #333;
+    color: #fff;
 }
 
-    .login-box input {
-        width: 90%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: right;
+    font-size: 1.2em;
+}
 
-    .login-box button {
-        width: 100%;
-        padding: 10px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-        .login-box button:hover {
-            background-color: #45a049;
-        }
-
-/* Dashboard Page Styles */
 .sidebar {
-    width: 250px;
-    height: 100vh;
+    width: 200px;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #89cff0;
-    padding-top: 30px;
-    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+    background-color: #111;
+    padding-top: 20px;
+    height: 100%;
 }
 
-    .sidebar h2 {
-        color: white;
-        text-align: center;
-    }
-
-    .sidebar a {
-        display: block;
-        color: white;
-        padding: 15px;
-        text-decoration: none;
-        text-align: center;
-    }
-
-        .sidebar a:hover {
-            background-color: #575757;
-        }
-
-/* Main content area */
-.main-content {
-    margin-left: 250px;
-    padding: 20px;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-}
-
-/* Tracking Section Styles */
-.map {
-    margin-bottom: 20px;
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-    .map iframe {
-        width: 100%;
-        height: 400px;
-        border: 0;
-    }
-
-/* Employee Reports Section */
-.reports {
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-.employee-card {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-}
-
-.employee-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 20px;
-    object-fit: cover;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-}
-
-.employee-details {
-    display: flex;
-    flex-direction: column;
-}
-
-.employee-name {
-    font-weight: bold;
-    font-size: 18px;
-    margin-bottom: 5px;
-}
-
-.employee-desc {
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-.employee-position {
-    font-size: 14px;
-    color: #555;
-    font-style: italic;
-}
-
-/* Logout Button */
-.sidebar a:last-child {
-    background-color: #d9534f;
-}
-
-    .sidebar a:last-child:hover {
-        background-color: #c9302c;
-    }
-
-/* Utility Classes */
-.clearfix::after {
-    content: "";
-    display: block;
-    clear: both;
-}
-
-.center {
-    text-align: center;
-}
-
-/* Employee Management Form Styles */
-.employee-form {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-    .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-
-    .form-group input {
-        width: calc(100% - 20px);
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-/* Add Employee Button */
-.add-employee-btn {
-    background-color: #4CAF50; /* Green color */
+.sidebar a {
+    padding: 15px;
+    text-decoration: none;
     color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
+    display: block;
 }
 
-    .add-employee-btn:hover {
-        background-color: #45a049; /* Darker green on hover */
-    }
-
-/* Employee Table Styles */
-#employee-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: white;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+.sidebar a img {
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
-    #employee-table th, #employee-table td {
-        padding: 12px 15px;
-        border: 1px solid #ddd;
-        text-align: left;
-    }
+.main-content {
+    margin-left: 210px;
+    padding: 20px;
+}
 
-    #employee-table th {
-        background-color: #89cff0; /* Match sidebar color */
-        color: white;
-    }
+form .form-group {
+    margin-bottom: 20px;
+}
 
-    #employee-table tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
+form .form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
 
-/* Permissions Dropdown Styling */
-#permissions {
-    width: calc(100% - 20px);
+form .form-group input,
+form .form-group select {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: white;
+    width: 100%;
+    max-width: 300px;
 }
 
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
