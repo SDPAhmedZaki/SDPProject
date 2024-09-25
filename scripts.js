@@ -12,7 +12,7 @@ function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const users = [{ username: 'Anas', password: '12345' } , 
-                   { username: 'Ahmed', password: '12345}];
+                   { username: 'Ahmed', password: '12345'}];
 
     const user = users.find(user => user.username === username && user.password === password);
 
