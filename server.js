@@ -9,8 +9,9 @@ app.use(express.static(path.join(__dirname)));
 // Sample route to handle employee data (you can extend this)
 app.get('/api/employees', (req, res) => {
     const employees = [
-        { id: 1, name: "John Doe", role: "Manager" },
-        { id: 2, name: "Jane Smith", role: "Developer" },
+        { id: 1, name: "Ahmed Zaki", role: "CEO" },
+        { id: 2, name: "Anas Bendaoud", role: "Co-Owner" },
+        { id: 3, name: "Yousef Moustafa", role: "bawab"},
         // Add more employees
     ];
     res.json(employees);
