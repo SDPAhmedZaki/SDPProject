@@ -7,12 +7,18 @@ function showSection(sectionId) {
     document.getElementById(sectionId).style.display = 'block';
 }
 
+// Fetch users from users.json
+async function fetchUsers() {
+    const response = await fetch('/users.json');
+    const users = await response.json();
+    return users;
+}
+
 // Login function
-function login() {
+async function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const users = [{ username: 'Anas', password: '12345' } , 
-                   { username: 'Ahmed', password: '12345'}];
+    const users = await fetchUsers();
 
     const user = users.find(user => user.username === username && user.password === password);
 
@@ -49,14 +55,39 @@ function saveProfile() {
 }
 
 // Change Password Function
-function changePassword() {
+async function changePassword() {
     const currentPassword = document.getElementById('current-password').value;
     const newPassword = document.getElementById('new-password').value;
 
-    if (currentPassword && newPassword) {
-        alert('Password changed successfully!');
+    const users = await fetchUsers();
+    const username = sessionStorage.getItem('username');
+    const user = users.find(user => user.username === username);
+
+    if (user) {
+        if (user.password === currentPassword && newPassword) {
+            user.password = newPassword; // Update password in memory
+            await updateUsers(users); // Update the JSON file
+            alert('Password changed successfully!');
+        } else {
+            alert('Current password is incorrect or new password is not provided.');
+        }
     } else {
-        alert('Please fill in all fields.');
+        alert('User not found.');
+    }
+}
+
+// Function to update users.json
+async function updateUsers(users) {
+    const response = await fetch('/update-users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(users)
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to update users');
     }
 }
 
@@ -68,7 +99,7 @@ function changeTheme() {
     alert(`Theme changed to ${theme}`);
 }
 
-// add employee
+// Add Employee function
 function addEmployee(event) {
     event.preventDefault(); // Prevent the form from submitting the usual way
 
