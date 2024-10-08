@@ -1,155 +1,125 @@
-// Function to show the selected section and hide others
-function showSection(sectionId) {
-    const sections = document.getElementsByClassName('content-section');
-    for (let i = 0; i < sections.length; i++) {
-        sections[i].style.display = 'none';
-    }
-    document.getElementById(sectionId).style.display = 'block';
-}
+// scripts.js
 
-// Fetch users from users.json
-async function fetchUsers() {
-    const response = await fetch('/users.json');
-    const users = await response.json();
-    return users;
-}
+// Function to handle user login
+function handleLogin(event) {
+    event.preventDefault(); // Prevent default form submission
 
-// Login function
-async function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const users = await fetchUsers();
 
-    const user = users.find(user => user.username === username && user.password === password);
-
-    if (user) {
-        sessionStorage.setItem('username', username);
-        window.location.href = 'dashboard.html';
-    } else {
-        alert('Invalid credentials, please try again.');
-    }
-}
-
-// Logout function
-function logout() {
-    sessionStorage.removeItem('username');
-    window.location.href = 'index.html';
-}
-
-// Check login status
-function checkLogin() {
-    const username = sessionStorage.getItem('username');
-    if (!username) {
-        window.location.href = 'index.html';
-    } else {
-        document.getElementById('welcome-msg').textContent = `Welcome, ${username}!`;
-    }
-}
-
-// Save Profile Information
-function saveProfile() {
-    const name = document.getElementById('profile-name').value;
-    const email = document.getElementById('profile-email').value;
-
-    alert(`Profile updated!\nName: ${name}\nEmail: ${email}`);
-}
-
-// Change Password Function
-async function changePassword() {
-    const currentPassword = document.getElementById('current-password').value;
-    const newPassword = document.getElementById('new-password').value;
-
-    const users = await fetchUsers();
-    const username = sessionStorage.getItem('username');
-    const user = users.find(user => user.username === username);
-
-    if (user) {
-        if (user.password === currentPassword && newPassword) {
-            user.password = newPassword; // Update password in memory
-            await updateUsers(users); // Update the JSON file
-            alert('Password changed successfully!');
-        } else {
-            alert('Current password is incorrect or new password is not provided.');
-        }
-    } else {
-        alert('User not found.');
-    }
-}
-
-// Function to update users.json
-async function updateUsers(users) {
-    const response = await fetch('/update-users', {
+    fetch('/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(users)
+        body: JSON.stringify({ username, password })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Login failed');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data.message);
+        // Handle successful login (e.g., redirect to dashboard)
+        window.location.href = 'dashboard.html'; // Change this to your dashboard page
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Invalid username or password.');
     });
-
-    if (!response.ok) {
-        throw new Error('Failed to update users');
-    }
 }
 
-// Change Theme Function
-function changeTheme() {
-    const theme = document.getElementById('theme').value;
-    document.body.className = theme;  // Add theme class to the body
+// Function to handle password change
+function handleChangePassword(event) {
+    event.preventDefault(); // Prevent default form submission
 
-    alert(`Theme changed to ${theme}`);
+    const username = document.getElementById('username').value; // Assuming the username is stored
+    const newPassword = document.getElementById('newPassword').value;
+
+    fetch(`/api/users/${username}/password`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ newPassword })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Password change failed');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data.message);
+        alert('Password changed successfully!');
+        // Optionally, clear the password fields
+        document.getElementById('newPassword').value = '';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to change password. Please try again.');
+    });
 }
 
-// add employee
-function addEmployee(event) {
-    event.preventDefault(); // Prevent the form from submitting the usual way
+// Function to handle adding a new employee
+function handleAddEmployee(event) {
+    event.preventDefault(); // Prevent default form submission
 
-    // Get form values
-    const name = document.getElementById('name').value;
-    const startDate = document.getElementById('start-date').value;
-    const dob = document.getElementById('dob').value;
-    const position = document.getElementById('position').value;
-    const permissions = document.getElementById('permissions').value;
+    const employeeName = document.getElementById('employeeName').value;
+    const employeeRole = document.getElementById('employeeRole').value;
 
-    // Create a new employee object
-    const newEmployee = {
-        name: name,
-        startDate: startDate,
-        dob: dob,
-        position: position,
-        permissions: permissions
-    };
+    const newEmployee = { name: employeeName, role: employeeRole };
 
-    // Send the new employee data to the server
     fetch('/api/employees', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(newEmployee)
     })
     .then(response => {
-        if (response.ok) {
-            return response.json();
+        if (!response.ok) {
+            throw new Error('Failed to add employee');
         }
-        throw new Error('Error adding employee');
+        return response.json();
     })
-    .then(employee => {
-        // Create a new row in the employee table
-        const employeeTable = document.getElementById('employee-table').querySelector('tbody');
-        const newRow = employeeTable.insertRow();
-
-        // Insert new cells (columns) into the row
-        newRow.insertCell(0).textContent = employee.name;
-        newRow.insertCell(1).textContent = employee.startDate;
-        newRow.insertCell(2).textContent = employee.dob;
-        newRow.insertCell(3).textContent = employee.position;
-        newRow.insertCell(4).textContent = employee.permissions;
-
-        // Clear the form after submission
-        document.getElementById('employee-form').reset();
+    .then(data => {
+        console.log('Employee added:', data);
+        alert('Employee added successfully!');
+        // Optionally, update the employee list on the page
+        loadEmployeeList();
     })
     .catch(error => {
-        alert(error.message);
+        console.error('Error:', error);
+        alert('Failed to add employee. Please try again.');
     });
 }
 
+// Function to load employee list from server
+function loadEmployeeList() {
+    fetch('/api/employees')
+        .then(response => response.json())
+        .then(data => {
+            const employeeList = document.getElementById('employeeList');
+            employeeList.innerHTML = ''; // Clear current list
+
+            data.forEach(employee => {
+                const li = document.createElement('li');
+                li.textContent = `${employee.name} - ${employee.role}`;
+                employeeList.appendChild(li);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading employee list:', error);
+        });
+}
+
+// Event listeners for the login form and other actions
+document.getElementById('loginForm').addEventListener('submit', handleLogin);
+document.getElementById('changePasswordForm').addEventListener('submit', handleChangePassword);
+document.getElementById('addEmployeeForm').addEventListener('submit', handleAddEmployee);
+
+// Load employee list on page load (if applicable)
+document.addEventListener('DOMContentLoaded', loadEmployeeList);
