@@ -1,4 +1,50 @@
 /* General Layout */
+/* Centering the Login Form and Logo */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-form input {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-form button {
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+.login-form button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.login-logo img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
