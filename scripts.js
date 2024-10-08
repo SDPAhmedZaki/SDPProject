@@ -99,8 +99,8 @@ function changeTheme() {
     alert(`Theme changed to ${theme}`);
 }
 
-// Add Employee function
-function addEmployee(event) {
+// add employee
+async function addEmployee(event) {
     event.preventDefault(); // Prevent the form from submitting the usual way
 
     // Get form values
@@ -110,24 +110,45 @@ function addEmployee(event) {
     const position = document.getElementById('position').value;
     const permissions = document.getElementById('permissions').value;
 
-    // Create a new row in the employee table
-    const employeeTable = document.getElementById('employee-table').querySelector('tbody');
-    const newRow = employeeTable.insertRow();
+    const newEmployee = {
+        name,
+        startDate,
+        dob,
+        position,
+        permissions
+    };
 
-    // Insert new cells (columns) into the row
-    const nameCell = newRow.insertCell(0);
-    const startDateCell = newRow.insertCell(1);
-    const dobCell = newRow.insertCell(2);
-    const positionCell = newRow.insertCell(3);
-    const permissionsCell = newRow.insertCell(4);
+    try {
+        // Send a POST request to add the new employee
+        const response = await fetch('/api/add-employee', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newEmployee)
+        });
 
-    // Add the form values to the respective cells
-    nameCell.textContent = name;
-    startDateCell.textContent = startDate;
-    dobCell.textContent = dob;
-    positionCell.textContent = position;
-    permissionsCell.textContent = permissions;
+        if (response.ok) {
+            const addedEmployee = await response.json();
+            // Create a new row in the employee table
+            const employeeTable = document.getElementById('employee-table').querySelector('tbody');
+            const newRow = employeeTable.insertRow();
 
-    // Clear the form after submission
-    document.getElementById('employee-form').reset();
+            // Insert new cells (columns) into the row
+            newRow.insertCell(0).textContent = addedEmployee.name;
+            newRow.insertCell(1).textContent = addedEmployee.startDate;
+            newRow.insertCell(2).textContent = addedEmployee.dob;
+            newRow.insertCell(3).textContent = addedEmployee.position;
+            newRow.insertCell(4).textContent = addedEmployee.permissions;
+
+            // Clear the form after submission
+            document.getElementById('employee-form').reset();
+        } else {
+            alert('Error adding employee. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('There was an error processing your request. Please try again.');
+    }
 }
+
