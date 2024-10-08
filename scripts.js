@@ -1,125 +1,117 @@
-// scripts.js
-
-// Function to handle user login
-function handleLogin(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    fetch('/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Login failed');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data.message);
-        // Handle successful login (e.g., redirect to dashboard)
-        window.location.href = 'dashboard.html'; // Change this to your dashboard page
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Invalid username or password.');
-    });
+// Check login status
+function checkLogin() {
+    const isLoggedIn = sessionStorage.getItem('loggedIn');
+    if (!isLoggedIn) {
+        window.location.href = 'login.html'; // Redirect to login page
+    } else {
+        document.getElementById('welcome-msg').innerText = `Welcome, ${sessionStorage.getItem('username')}!`;
+    }
 }
 
-// Function to handle password change
-function handleChangePassword(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    const username = document.getElementById('username').value; // Assuming the username is stored
-    const newPassword = document.getElementById('newPassword').value;
-
-    fetch(`/api/users/${username}/password`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ newPassword })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Password change failed');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data.message);
-        alert('Password changed successfully!');
-        // Optionally, clear the password fields
-        document.getElementById('newPassword').value = '';
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to change password. Please try again.');
+// Show selected section
+function showSection(section) {
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(s => {
+        s.style.display = 'none';
     });
+    document.getElementById(section).style.display = 'block';
 }
 
-// Function to handle adding a new employee
-function handleAddEmployee(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    const employeeName = document.getElementById('employeeName').value;
-    const employeeRole = document.getElementById('employeeRole').value;
-
-    const newEmployee = { name: employeeName, role: employeeRole };
-
-    fetch('/api/employees', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newEmployee)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to add employee');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Employee added:', data);
-        alert('Employee added successfully!');
-        // Optionally, update the employee list on the page
-        loadEmployeeList();
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to add employee. Please try again.');
-    });
+// Logout function
+function logout() {
+    sessionStorage.clear();
+    window.location.href = 'login.html'; // Redirect to login page
 }
 
-// Function to load employee list from server
-function loadEmployeeList() {
-    fetch('/api/employees')
+// Fetch employee data
+function fetchEmployees() {
+    fetch('employeelist.json')
         .then(response => response.json())
         .then(data => {
-            const employeeList = document.getElementById('employeeList');
-            employeeList.innerHTML = ''; // Clear current list
+            const tableBody = document.getElementById('employee-table').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = ''; // Clear existing entries
 
             data.forEach(employee => {
-                const li = document.createElement('li');
-                li.textContent = `${employee.name} - ${employee.role}`;
-                employeeList.appendChild(li);
+                const row = tableBody.insertRow();
+                row.insertCell(0).innerText = employee.name;
+                row.insertCell(1).innerText = employee.startDate;
+                row.insertCell(2).innerText = employee.dob;
+                row.insertCell(3).innerText = employee.position;
+                row.insertCell(4).innerText = employee.permissions;
             });
-        })
-        .catch(error => {
-            console.error('Error loading employee list:', error);
         });
 }
 
-// Event listeners for the login form and other actions
-document.getElementById('loginForm').addEventListener('submit', handleLogin);
-document.getElementById('changePasswordForm').addEventListener('submit', handleChangePassword);
-document.getElementById('addEmployeeForm').addEventListener('submit', handleAddEmployee);
+// Add a new employee
+function addEmployee(event) {
+    event.preventDefault();
 
-// Load employee list on page load (if applicable)
-document.addEventListener('DOMContentLoaded', loadEmployeeList);
+    const name = document.getElementById('name').value;
+    const startDate = document.getElementById('start-date').value;
+    const dob = document.getElementById('dob').value;
+    const position = document.getElementById('position').value;
+    const permissions = document.getElementById('permissions').value;
+
+    // Create employee object
+    const newEmployee = {
+        name: name,
+        startDate: startDate,
+        dob: dob,
+        position: position,
+        permissions: permissions,
+    };
+
+    // Fetch existing employees, add new employee, and save back
+    fetch('employeelist.json')
+        .then(response => response.json())
+        .then(data => {
+            data.push(newEmployee); // Add new employee
+            return fetch('employeelist.json', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+        })
+        .then(() => {
+            alert('Employee added successfully!');
+            fetchEmployees(); // Refresh the employee table
+        });
+}
+
+// Change user password
+function changePassword() {
+    const currentPassword = document.getElementById('current-password').value;
+    const newPassword = document.getElementById('new-password').value;
+
+    // Fetch users and check current password
+    fetch('users.json')
+        .then(response => response.json())
+        .then(users => {
+            const username = sessionStorage.getItem('username');
+            const user = users.find(u => u.username === username);
+            if (user && user.password === currentPassword) {
+                user.password = newPassword; // Update password
+
+                // Save updated user list
+                return fetch('users.json', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(users)
+                });
+            } else {
+                alert('Current password is incorrect!');
+            }
+        })
+        .then(() => {
+            alert('Password changed successfully!');
+        });
+}
+
+// On window load, fetch employees
+window.onload = function() {
+    fetchEmployees();
+};

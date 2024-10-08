@@ -53,58 +53,59 @@
             <p>Vehicle tracking data will go here.</p>
         </div>
 
-         <!-- Employee Management Section -->
- <div id="employee-management" class="content-section" style="display: none;">
-     <h2>Employee Management</h2>
+        <!-- Employee Management Section -->
+        <div id="employee-management" class="content-section" style="display: none;">
+            <h2>Employee Management</h2>
 
-     <!-- Employee Input Form -->
-     <form id="employee-form" class="employee-form" onsubmit="addEmployee(event)">
-         <div class="form-group">
-             <label for="name">Name:</label>
-             <input type="text" id="name" required>
-         </div>
-         <div class="form-group">
-             <label for="start-date">Start Date:</label>
-             <input type="date" id="start-date" required>
-         </div>
-         <div class="form-group">
-             <label for="dob">Date of Birth:</label>
-             <input type="date" id="dob" required>
-         </div>
-         <div class="form-group">
-             <label for="position">Position:</label>
-             <input type="text" id="position" required>
-         </div>
-         <div class="form-group">
-             <label for="permissions">Permissions:</label>
-             <select id="permissions" required>
-                 <option value="Basic">Basic</option>
-                 <option value="Manager">Manager</option>
-                 <option value="Admin">Admin</option>
-             </select>
-         </div>
+            <!-- Employee Input Form -->
+            <form id="employee-form" class="employee-form" onsubmit="addEmployee(event)">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="start-date">Start Date:</label>
+                    <input type="date" id="start-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" required>
+                </div>
+                <div class="form-group">
+                    <label for="position">Position:</label>
+                    <input type="text" id="position" required>
+                </div>
+                <div class="form-group">
+                    <label for="permissions">Permissions:</label>
+                    <select id="permissions" required>
+                        <option value="Basic">Basic</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
 
-         <!-- Add Employee Button -->
-         <button type="submit" class="add-employee-btn">+ Add Employee</button>
-     </form>
+                <!-- Add Employee Button -->
+                <button type="submit" class="add-employee-btn">+ Add Employee</button>
+            </form>
 
-     <!-- Employee Table -->
-     <h3>Employee List</h3>
-     <table id="employee-table">
-         <thead>
-             <tr>
-                 <th>Name</th>
-                 <th>Start Date</th>
-                 <th>Date of Birth</th>
-                 <th>Position</th>
-                 <th>Permissions</th>
-             </tr>
-         </thead>
-         <tbody>
-             <!-- New employees will be added here -->
-         </tbody>
-     </table>
- </div>
+            <!-- Employee Table -->
+            <h3>Employee List</h3>
+            <table id="employee-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Start Date</th>
+                        <th>Date of Birth</th>
+                        <th>Position</th>
+                        <th>Permissions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Employee entries will be populated here -->
+                </tbody>
+            </table>
+        </div>
+
         <!-- Settings Section -->
         <div id="settings" class="content-section" style="display: none;">
             <h2>Settings</h2>
