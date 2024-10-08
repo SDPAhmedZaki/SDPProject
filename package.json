@@ -7,6 +7,10 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.17.1"
-  }
+    "body-parser": "^1.20.3",
+    "express": "^4.21.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
